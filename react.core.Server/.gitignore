@@ -1,0 +1,47 @@
+# Build output
+/bin/
+/obj/
+
+# IDE-related
+.vs/
+/.idea/
+*.user
+*.Suo
+*.userosscache
+*.Sln.docstates
+*_ReSharper*/
+/_ReSharper*/
+*.resharper.user
+*.rsuser
+*.rsuser.os
+
+# Package directories
+/packages/
+*.nupkg
+*.Snupkg
+
+# NuGet restore overrides
+**/packages/*
+!/packages/repositories.config
+
+# Temporary files
+*.tmp
+*.temp
+*.pidb
+
+# Logs and coverage
+*.log
+/logs/
+/coverage/
+
+# Publish outputs
+/wwwroot/
+/publish/
+
+# Lock file
+/project.lock.json
+
+# Secrets
+/secrets.json
+/appsettings.json
+/appsettings.*.json

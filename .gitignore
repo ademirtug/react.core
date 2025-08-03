@@ -1,0 +1,6 @@
+# IDE-related
+.vs/
+*.user
+*.Suo
+*.userosscache
+*.Sln.docstates

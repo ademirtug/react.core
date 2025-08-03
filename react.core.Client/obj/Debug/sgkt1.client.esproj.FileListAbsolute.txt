@@ -1,0 +1,2 @@
+C:\Users\akn\source\sgkt1\sgkt1.client\obj\Debug\sgkt1.client.esproj.CoreCompileInputs.cache
+C:\Users\akn\source\react-core\react.core.client\obj\Debug\sgkt1.client.esproj.CoreCompileInputs.cache
