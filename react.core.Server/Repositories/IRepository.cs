@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace duoword.admin.Server.Repositories
+namespace react.core.Server.Repositories
 {
     public interface IRepository<T> where T : class
     {

@@ -1,4 +1,4 @@
-﻿namespace duoword.admin.Server.Models
+﻿namespace react.core.Server.Models
 {
     public class User
     {

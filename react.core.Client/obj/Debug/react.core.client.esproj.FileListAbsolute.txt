@@ -1,1 +1,2 @@
 C:\Users\akn\source\react-core\react.core.client\obj\Debug\react.core.client.esproj.CoreCompileInputs.cache
+C:\Users\akn\source\react.core\react.core.client\obj\Debug\react.core.Client.esproj.CoreCompileInputs.cache

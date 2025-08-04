@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
-namespace duoword.admin.Server.Controllers
+namespace react.core.Server.Controllers
 {
     [ApiController]
     public class ErrorController : ControllerBase

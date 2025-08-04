@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using duoword.admin.Server.Data;
+using react.core.Server.Data;
 using System.Linq.Expressions;
 
-namespace duoword.admin.Server.Repositories
+namespace react.core.Server.Repositories
 {
     public class GenericRepository<T> : IRepository<T> where T : class
     {

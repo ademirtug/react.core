@@ -1,4 +1,4 @@
-﻿namespace duoword.admin.Server.Services
+﻿namespace react.core.Server.Services
 {
     public class JwtExtractor
     {

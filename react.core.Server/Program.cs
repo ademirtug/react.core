@@ -2,12 +2,9 @@ using Mapster;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using duoword.admin.Server.Data;
-using duoword.admin.Server.Models;
-using duoword.admin.Server.Repositories;
-using duoword.admin.Server.Services;
-using duoword.admin.Server.Services.RabbitMQ;
-using System.Security.Cryptography;
+using react.core.Server.Data;
+using react.core.Server.Repositories;
+using react.core.Server.Services;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
