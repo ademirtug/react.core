@@ -20,16 +20,25 @@ namespace react.core.Server.Controllers
 		[HttpPost("login")]
 		public IActionResult Login([FromForm] string email, [FromForm] string password)
 		{
-			var token = GenerateJwtToken(email);
+			//if (email != "demo@example.com" || password != "1234")
+			//{
+			//	return Unauthorized();
+			//}
+
+			var token = GenerateJwt(email, "Admin");
+			var stringToken = new JwtSecurityTokenHandler().WriteToken(token);
+			Response.Cookies.Append("access_token", stringToken, new CookieOptions
+			{
+				HttpOnly = true, // Prevents JavaScript access (XSS protection)
+				Secure = true,   // Requires HTTPS
+				SameSite = SameSiteMode.Strict, // Protects against CSRF
+				Expires = DateTime.UtcNow.AddHours(1)
+			});
 
 			return Ok(new
 			{
-				token = token,
-				user = new
-				{
-					email = email,
-					role = "User" // Default role
-				}
+				token = stringToken,
+				user = new { email }
 			});
 		}
 
@@ -40,13 +49,13 @@ namespace react.core.Server.Controllers
 		}
 
 		[HttpGet("me")]
-		public IActionResult GetCurrentUser()
+		public IActionResult GetCurrentAdmin()
 		{
 			// For demo purposes, return a dummy user
 			return Ok(new
 			{
 				email = "demo@example.com",
-				role = "User"
+				role = "Admin"
 			});
 		}
 
@@ -55,32 +64,32 @@ namespace react.core.Server.Controllers
 		{
 			// Just generate a new token with same claims
 			var email = User.FindFirstValue(ClaimTypes.Email) ?? "demo@example.com";
-			var newToken = GenerateJwtToken(email);
+			var newToken = GenerateJwt(email, "Admin");
 
 			return Ok(new { token = newToken });
 		}
 
-		private string GenerateJwtToken(string email)
+		private JwtSecurityToken GenerateJwt(string email, string? role)
 		{
 			var securityKey = new SymmetricSecurityKey(
-				Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
+				Encoding.UTF8.GetBytes(_configuration["JwtSettings:SecretKey"]));
 			var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
 			var claims = new[]
 			{
 			new Claim(ClaimTypes.Email, email),
-			new Claim(ClaimTypes.Role, "User") // Default role
+			new Claim(ClaimTypes.Role, role ?? "Admin") // Default role
         };
 
 			var token = new JwtSecurityToken(
-				issuer: _configuration["Jwt:Issuer"],
-				audience: _configuration["Jwt:Audience"],
+				issuer: _configuration["JwtSettings:Issuer"],
+				audience: _configuration["JwtSettings:Audience"],
 				claims: claims,
 				expires: DateTime.Now.AddHours(1), // Token valid for 1 hour
 				signingCredentials: credentials
 			);
 
-			return new JwtSecurityTokenHandler().WriteToken(token);
+			return token;
 		}
 	}
 }

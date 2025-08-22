@@ -1,52 +1,65 @@
-import ProtectedRoutes from "./ProtectedRoute";
-import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from "react-router-dom";
+import ProtectedRoute from "./ProtectedRoute";
+import { BrowserRouter as Router, Routes, Route, Navigate, Outlet, useNavigate } from "react-router-dom";
 import { Dashboard, ThemeProvider, SearchWidget, UserDropdown } from '@selestra11/react.dashboard';
-import SplitLogin from './react.login/components/Login';
-import AuthProvider, { useAuth } from './react.login/providers/AuthProvider';
+//import SplitLogin from './react.login/components/Login';
+//import AuthProvider, { useAuth } from './react.login/providers/AuthProvider';
+import { AuthProvider, useAuth, SplitLogin } from '@selestra11/react.login';
+
 
 import '@selestra11/react.dashboard/dist/assets/style.css';
-//import '@selestra11/react.login/dist/assets/react.login.css';
+import '@selestra11/react.login/dist/assets/react.login.css';
 
-export default function App() {
+function Home() {
     return (
-        <AuthProvider>
-            <ThemeProvider>
-                <Router>
-                    <AppContent />
-                </Router>
-            </ThemeProvider>
-        </AuthProvider>
+        <p>Hello world!</p>
     );
 }
 
-function AppContent() {
+function SubMenuRoute() {
+    return (
+        <p>Submenu Route</p>
+    );
+}
+
+function AdminLayout() {
     const { logout } = useAuth();
     const navigate = useNavigate();
     const menuItems = [
         {
+            id: 'home',
             label: 'Home',
             icon: 'home',
             roles: ['admin', 'user'],
-            action: ({ navigate }) => navigate('/')
+            action: ({ navigate }) => navigate('')
+        },
+        {
+            id: 'dropdown_menu',
+            label: 'Dropdown Menu',
+            icon: 'language',
+            subItems: [
+                {
+                    label: 'Sub Menu Route',
+                    icon: 'description',
+                    action: ({ navigate }) => navigate('/submenuroute')
+                }
+            ]
         }
     ];
 
     const topBarConfig = {
-        leftContent: null,
-        centerContent: (
+        leftContent: (
             <SearchWidget
                 placeholder="Find anything..."
                 onSearch={(term) => console.log(term)}
             />
         ),
+        centerContent: null,
         rightContent: (
             <UserDropdown
                 items={[
-                    { label: 'Profile', icon: 'user' },
-                    { label: 'Notifications', icon: 'bell' },
                     {
                         label: 'Logout',
-                        icon: 'sign-out-alt',
+                        icon: 'logout',
                         onClick: () => {
                             logout();
                             navigate('/login');
@@ -57,24 +70,46 @@ function AppContent() {
         ),
         showThemeToggle: true
     };
-
     return (
-        <>
-            <Routes>
-                <Route element={<ProtectedRoutes />}>
-                    <Route path="/" element={<Dashboard menuItems={menuItems} topBarConfig={topBarConfig}  />} />
-                </Route>
-                <Route path="/login" element={<SplitLogin endpoints={{
-                    login: "/api/v1/auth/login",
-                    logout: "/api/v1/auth/logout",
-                    me: "/api/v1/auth/me",
-                    refresh: "/api/v1/auth/refresh"
-                }}
-                    tokenStorageKey="my-app-auth-token"
-                />} />
-                <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-        </>
+        <Dashboard menuItems={menuItems} topBarConfig={topBarConfig} title="Duo Word">
+            <Outlet />
+        </Dashboard>
+    );
+}
+
+
+export default function App() {
+    return (
+        <AuthProvider>
+            <ThemeProvider>
+                <Router>
+                    <Routes>
+                        {/* Admin Routes */}
+                        {/* Public Admin Routes */}
+                        <Route path="/login" element={<SplitLogin
+                            endpoints={{
+                                login: "/api/v1/auth/login",
+                                logout: "/api/v1/auth/logout",
+                                me: "/api/v1/auth/me",
+                                refresh: "/api/v1/auth/refresh"
+                            }}
+                            tokenStorageKey="my-app-auth-token"
+                        />} />
+
+                        {/* Protected Admin Routes */}
+                        <Route path="" element={<ProtectedRoute />}>
+                            <Route element={<AdminLayout />}>
+                                <Route index element={<Home />} />
+                                <Route path="/submenuroute" element={<SubMenuRoute />} />
+                            </Route>
+                        </Route>
+
+                        {/* Catch-all */}
+                        <Route path="*" element={<Navigate to="/" replace />} />
+                    </Routes>
+                </Router>
+            </ThemeProvider>
+        </AuthProvider>
     );
 }
 
