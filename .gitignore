@@ -1,0 +1,75 @@
+# Ignore build output directories
+*/bin/
+*/obj/
+
+.vs/
+
+# Ignore user-specific files
+*/.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+tests/.vs/
+tests/*.user
+tests/*.suo
+tests/*.userosscache
+tests/*.sln.docstates
+
+# Ignore build artifacts
+*.log
+*.nupkg
+*.snupkg
+
+# Ignore package directories
+*/packages/
+
+# Ignore any NuGet packages that may have been restored in a different location
+**/packages/*
+!**/packages/repositories.config
+
+# Ignore temporary files
+*.tmp
+*.temp
+*.pidb
+*.rsuser
+*.rsuser.os
+*.resharper.user
+_ReSharper*/
+*_ReSharper*/
+
+# Ignore publish outputs
+*/wwwroot/
+*/publish/
+
+# Ignore lock files
+project.lock.json
+
+# Ignore IDE configurations
+.idea/
+
+# Ignore coverage files
+coverage/
+
+# Ignore logs
+logs/
+
+# Ignore any secrets
+secrets.json
+
+# React-specific ignores (added for completeness)
+node_modules/
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+dist/
+build/
+.cache/
+.parcel-cache/
