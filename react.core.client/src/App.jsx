@@ -1,15 +1,15 @@
 import ProtectedRoute from "./ProtectedRoute";
 import { BrowserRouter as Router, Routes, Route, Navigate, Outlet, useNavigate } from "react-router-dom";
 import { Dashboard, ThemeProvider, SearchWidget, UserDropdown } from '@selestra11/react.dashboard';
-//import SplitLogin from './react.login/components/Login';
-//import AuthProvider, { useAuth } from './react.login/providers/AuthProvider';
 import { AuthProvider, useAuth, SplitLogin } from '@selestra11/react.login';
-
+import { useTranslation } from 'react-i18next';
+import React from 'react'; // Make sure React is imported
 
 import '@selestra11/react.dashboard/dist/assets/style.css';
 import '@selestra11/react.login/dist/assets/react.login.css';
 
 function Home() {
+    const { t } = useTranslation();
     return (
         <p>Hello world!</p>
     );
@@ -24,6 +24,8 @@ function SubMenuRoute() {
 function AdminLayout() {
     const { logout } = useAuth();
     const navigate = useNavigate();
+    const { t } = useTranslation();
+
     const menuItems = [
         {
             id: 'home',
@@ -70,6 +72,7 @@ function AdminLayout() {
         ),
         showThemeToggle: true
     };
+
     return (
         <Dashboard menuItems={menuItems} topBarConfig={topBarConfig} title="Duo Word">
             <Outlet />
@@ -77,8 +80,14 @@ function AdminLayout() {
     );
 }
 
-
 export default function App() {
+    //const { i18n } = useTranslation();
+    //React.useEffect(() => {
+    //    if (i18n && typeof i18n.changeLanguage === 'function') {
+    //        i18n.changeLanguage('tr');
+    //    }
+    //}, [i18n]);
+
     return (
         <AuthProvider>
             <ThemeProvider>
@@ -112,4 +121,3 @@ export default function App() {
         </AuthProvider>
     );
 }
-

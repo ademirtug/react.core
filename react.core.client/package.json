@@ -11,10 +11,14 @@
   },
   "dependencies": {
     "@selestra11/react.dashboard": "^0.0.8",
-    "@selestra11/react.login": "^0.0.3",
+    "@selestra11/react.login": "^0.0.7",
+    "i18next": "^23.16.8",
+    "i18next-browser-languagedetector": "^8.2.0",
+    "i18next-http-backend": "^3.0.2",
     "jwt-decode": "^4.0.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-i18next": "^14.1.3",
     "react-router-dom": "^7.7.1"
   },
   "devDependencies": {
