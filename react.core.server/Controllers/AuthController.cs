@@ -6,7 +6,7 @@ using System.Text;
 
 namespace react.core.Server.Controllers
 {
-	[Route("api/v1/auth")]
+	[Route("api/v1/[controller]")]
 	[ApiController]
 	public class AuthController : ControllerBase
 	{

@@ -1,9 +1,11 @@
 import ProtectedRoutes from "./ProtectedRoute";
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import { Dashboard, ThemeProvider, SearchWidget, UserDropdown } from '@selestra11/react.dashboard';
-import { AuthProvider, useAuth, SplitLogin } from '@selestra11/react.login';
+import SplitLogin from './react.login/components/Login';
+import AuthProvider, { useAuth } from './react.login/providers/AuthProvider';
+
 import '@selestra11/react.dashboard/dist/assets/style.css';
-import '@selestra11/react.login/dist/assets/react.login.css';
+//import '@selestra11/react.login/dist/assets/react.login.css';
 
 export default function App() {
     return (

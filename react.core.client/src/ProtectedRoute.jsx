@@ -1,4 +1,5 @@
-import { useAuth } from "@selestra11/react.login";
+//import { useAuth } from "@selestra11/react.login";
+import AuthProvider, { useAuth } from './react.login/providers/AuthProvider';
 import { Navigate, Outlet } from 'react-router-dom'
 
 export default function ProtectedRoutes() {
