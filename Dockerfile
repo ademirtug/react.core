@@ -12,11 +12,6 @@ RUN apt-get update && apt-get install -y curl
 RUN curl -sL https://deb.nodesource.com/setup_20.x | bash
 RUN apt-get install -y nodejs
 
-#Setup verdaccio
-RUN npm config set registry http://65.108.83.60:4873 \
-    && npm config get registry
-
-
 # Copy and restore .NET dependencies
 COPY ["react.core.server/react.coreserver.csproj", "react.core.server/"]
 COPY ["react.core.client/react.core.client.esproj", "react.core.client/"]
