@@ -1,9 +1,9 @@
 import ProtectedRoutes from "./ProtectedRoute";
 import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from "react-router-dom";
-import { Dashboard, ThemeProvider, SearchWidget, UserDropdown } from 'leximo-dashboard';
-import { AuthProvider, useAuth, SplitLogin } from 'leximo-auth';
-import 'leximo-dashboard/dist/assets/style.css';
-import 'leximo-auth/dist/assets/leximo-auth.css';
+import { Dashboard, ThemeProvider, SearchWidget, UserDropdown } from '@selestra11/react.dashboard';
+import { AuthProvider, useAuth, SplitLogin } from '@selestra11/react.login';
+import '@selestra11/react.dashboard/dist/assets/style.css';
+import '@selestra11/react.login/dist/assets/react.login.css';
 
 export default function App() {
     return (
@@ -18,7 +18,7 @@ export default function App() {
 }
 
 function AppContent() {
-    const { user, logout } = useAuth();
+    const { logout } = useAuth();
     const navigate = useNavigate();
     const menuItems = [
         {
@@ -26,32 +26,7 @@ function AppContent() {
             icon: 'home',
             roles: ['admin', 'user'],
             action: ({ navigate }) => navigate('/')
-        },
-        //{
-        //    label: 'Logout',
-        //    icon: 'sign-out-alt',
-        //    action: ({ navigate }) => {
-        //        logout();
-        //        navigate('/login');
-        //    }
-        //},
-        //{
-        //    label: 'Admin',
-        //    icon: 'lock',
-        //    subItems: [
-        //        {
-        //            label: 'Users',
-        //            action: ({ navigate }) => navigate('/admin/users')
-        //        },
-        //        {
-        //            label: 'System Settings',
-        //            action: ({ navigate, closeMenu }) => {
-        //                closeMenu();
-        //                openAdvancedSettings();
-        //            }
-        //        }
-        //    ]
-        //}
+        }
     ];
 
     const topBarConfig = {

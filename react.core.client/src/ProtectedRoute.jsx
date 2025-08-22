@@ -1,4 +1,4 @@
-import { useAuth } from "leximo-auth";
+import { useAuth } from "@selestra11/react.login";
 import { Navigate, Outlet } from 'react-router-dom'
 
 export default function ProtectedRoutes() {
