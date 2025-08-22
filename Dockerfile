@@ -12,10 +12,15 @@ RUN apt-get update && apt-get install -y curl
 RUN curl -sL https://deb.nodesource.com/setup_20.x | bash
 RUN apt-get install -y nodejs
 
+#Setup verdaccio
+RUN npm config set registry http://65.108.83.60:4873 \
+    && npm config get registry
+
+
 # Copy and restore .NET dependencies
-COPY ["react.core.Server/react.core.Server.csproj", "react.core.Server/"]
-COPY ["react.core.Client/react.core.Client.esproj", "react.core.Client/"]
-RUN dotnet restore "react.core.Server/react.core.Server.csproj"
+COPY ["react.core.server/react.coreserver.csproj", "react.core.server/"]
+COPY ["react.core.client/react.core.client.esproj", "react.core.client/"]
+RUN dotnet restore "react.core.server/react.core.server.csproj"
 
 # Copy everything
 COPY . .
@@ -28,7 +33,7 @@ RUN npm install
 RUN npm run build
 
 # Build .NET app
-WORKDIR /src/react.core.Server
+WORKDIR /src/react.core.server
 RUN dotnet build -c Release -o /app/build
 
 # Publish the .NET app
@@ -39,18 +44,11 @@ RUN dotnet publish -c Release -o /app/publish /p:UseAppHost=false
 FROM base AS final
 WORKDIR /app
 
-# Install PostgreSQL client tools in the final image
-RUN apt-get update && apt-get install -y wget gnupg2 lsb-release \
-    && echo "deb [signed-by=/usr/share/keyrings/pgdg.gpg] http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" | tee /etc/apt/sources.list.d/pgdg.list \
-    && wget -qO - https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor -o /usr/share/keyrings/pgdg.gpg \
-    && apt-get update && apt-get install -y postgresql-client-17 \
-    && rm -rf /var/lib/apt/lists/*
-
 # Copy published .NET files
 COPY --from=publish /app/publish .
 
 # Copy built React files into wwwroot
-COPY --from=build /src/react.core.Client/dist ./wwwroot
+COPY --from=build /src/react.core.client/dist ./wwwroot
 
 # Start the .NET application
-ENTRYPOINT ["dotnet", "react.core.Server.dll"]
+ENTRYPOINT ["dotnet", "react.core.server.dll"]
