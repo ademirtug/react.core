@@ -90,6 +90,12 @@ if (app.Environment.IsDevelopment())
 	app.MapOpenApi();// so that we can see the open api documentation in developmet mode, remember this one uses server port not the client port.
 }
 
+//using (var scope = app.Services.CreateScope())
+//{
+//	var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+//	db.Database.Migrate(); // applies any pending migrations OR creates db
+//}
+
 //MIDDLEWARES
 app.UseExceptionHandler("/error");
 app.UseDefaultFiles();//if there is no file in the request then it will look for default files like index.html
